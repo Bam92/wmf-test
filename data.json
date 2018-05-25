@@ -1,0 +1,15 @@
+[
+    {
+        "title": "Prenom",
+        "type": "string"
+    },
+    {
+        "title": "Nom",
+        "type": "string"
+    },
+    {
+        "title": "Nom du pere",
+        "type": "string"
+    }
+]
+
