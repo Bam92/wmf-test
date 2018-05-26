@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Form Builder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
     
 </head>
 <body>
@@ -17,17 +17,62 @@
     
     <!-- Local jQuery -->
     <script src="jquery-3.3.1.min.js"></script>
-    
-    <!-- Include jQuery from Google CDN-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- Include jQuery from Google CDN
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>-->
     <script>
         $(function () {
             $("#display").click(function() {
 
             $.getJSON("data.json", function(data) {
+
                 $.each(data, function( key, val ) {
-                    $("<label>").attr("for", val.title).html(val.title + ":<input type='text'> <br>").
-                        appendTo( "#myForm" );
+                    switch ( val.type ) {
+                        case "area":
+                            $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                            $("<label>").attr("for", val.title).html(val.title + ":<textarea> </textarea>").
+                            appendTo( "#myForm" );
+                            break;
+
+                        case "radio":
+                        $( "<div/>", {"class": "my-form-elt"}).text(val.title).appendTo( "#myForm" );
+                            for ( i in val.enum ) {
+                                $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                                var radioBtn = $('<input>').attr( {type: "radio", name: "sex"} ) ;
+                                radioBtn.appendTo('#myForm');
+                                $( "<label>" ).attr( "for", val.enum[i] ).text( val.enum[i] ).appendTo( "#myForm" );
+                            }
+                            break;
+                    
+                        case "box":
+                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
+                            for ( i in val.enum ) {
+                                $( "<div/>", {"class": "my-form-elt", "id": "checkbox"}).appendTo( "#myForm" );
+                                $( "#myForm" ).append( "<input type='checkbox' name='food'>" +val.enum[i]+ "</input>" );
+                            }
+                            break;
+
+                        case "select":
+                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            var selectElt = $('<select>').attr( {name: "function", id: "function"} );
+                            selectElt.appendTo('#myForm');
+                            for ( i in val.enum ) {
+                                var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
+                                optionElt.text( val.enum[i] );
+                                $( "select" ).append( optionElt );
+                                console.log(optionElt);
+                            }
+                            break;
+
+                        default:
+                            $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                            $( "<label>" ).attr( "for", val.title ).html(val.title + ":<input type='text'> <br>").
+                            appendTo( "#myForm" );
+                            break;
+
+                    }
+
                 });
             });
             });
