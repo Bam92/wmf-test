@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Form Builder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="styles.css" />
+    <!--
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    -->
     
 </head>
 <body>
@@ -61,6 +63,35 @@
                                 var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
                                 optionElt.text( val.enum[i] );
                                 $( "select" ).append( optionElt );
+                                console.log(optionElt);
+                            }
+                            break;
+                        
+                            case "multiple":
+                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + "(Multi-selection: ctrl (Win) ou cmd (Mac)):").appendTo( "#myForm" );
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            var multipleElt = $('<select multiple>').attr( {name: "country", id: "country"} );
+                                multipleElt.appendTo('#myForm');
+                            for ( i in val.enum ) {
+                                var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
+                                optionElt.text( val.enum[i] );
+                                $( "#country" ).append( optionElt ); // when I select select elt here it affects even
+                                // other select elements. For that purpose I select by Id.
+                                console.log(optionElt);
+                            }
+                            break;
+
+                            case "auto":
+                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            $( "<input>" ).attr( { list: "browsers", id: "myBrowser", name: "myBrowser"  } ).appendTo( "#myForm" );
+                            var datalistElt = $('<datalist>').attr( { id: "browsers" } );
+                                datalistElt.appendTo('#myForm');
+                            for ( i in val.enum ) {
+                                var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
+                                //optionElt.text( val.enum[i] );
+                                $( "datalist" ).append( optionElt ); // when I select select elt here it affects even
+                                // other select elements. For that purpose I select by Id.
                                 console.log(optionElt);
                             }
                             break;

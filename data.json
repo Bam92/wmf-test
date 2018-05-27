@@ -33,6 +33,28 @@
             "enseignant",
             "ingenieur"
         ]
+    },
+    {
+        "title": "Pays visites",
+        "type": "multiple",
+        "enum":[
+            "RDC",
+            "Rwanda",
+            "Chine",
+            "Italie"
+        ]
+    },
+    {
+        "title": "Choisir un navigateur dans cette liste",
+        "type": "auto",
+        "enum":[
+            "Chrome",
+            "Firefox",
+            "Opera",
+            "Internet Explorer",
+            "Safari",
+            "Microsoft Edge"
+        ]
     }
 ]
 
