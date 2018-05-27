@@ -1,24 +1,29 @@
 [
     {
         "title": "Prenom",
-        "type": "string"
+        "type": "string",
+        "id": "firstName"
     },
     {
         "title": "Nom",
-        "type": "string"
+        "type": "string",
+        "id": "name"
     },
     {
         "title": "Votre adresse",
-        "type": "area"
+        "type": "area",
+        "id": "adress"
     },
     {
-        "title": "Sexe",
+        "title": "Votre Sexe",
         "type": "radio",
+        "id": "sex",
         "enum": ["M", "F"]
     },
     {
         "title": "Vos aliments preferes",
         "type": "box",
+        "id": "food",
         "enum":[
             "frites",
             "steak hache",
@@ -28,6 +33,7 @@
     {
         "title": "Fonction",
         "type": "select",
+        "id": "function",
         "enum":[
             "etudiant",
             "enseignant",
@@ -47,6 +53,7 @@
     {
         "title": "Choisir un navigateur dans cette liste",
         "type": "auto",
+        "id": "browser",
         "enum":[
             "Chrome",
             "Firefox",

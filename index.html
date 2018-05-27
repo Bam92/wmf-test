@@ -27,81 +27,96 @@
             $("#display").click(function() {
 
             $.getJSON("data.json", function(data) {
-
+                // add div block to the form
+                var numberOfBlock = data.length;
+               /* for ( i = 0; i < numberOfBlock; i++ ) {
+                    var id = i + 1;
+                    console.log("div num." +id);
+                    var div = $( "<div>" ).attr( { class: "my-form-elt" } );
+                    div.appendTo( "#myForm" );
+                   // if ( i == 3 )  console.log(data.title);
+                }
+                console.log(data.length);*/
                 $.each(data, function( key, val ) {
                     switch ( val.type ) {
                         case "area":
-                            $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
                             $("<label>").attr("for", val.title).html(val.title + ":<textarea> </textarea>").
-                            appendTo( "#myForm" );
-                            break;
+                            appendTo( "#" +val.id );
+                            break;                            
 
                         case "radio":
-                        $( "<div/>", {"class": "my-form-elt"}).text(val.title).appendTo( "#myForm" );
-                            for ( i in val.enum ) {
-                                $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
+                            $( "#" +val.id ).append(val.title + ":<br>");
+                            
+                            for ( i in val.enum ) {                        
                                 var radioBtn = $('<input>').attr( {type: "radio", name: "sex"} ) ;
-                                radioBtn.appendTo('#myForm');
-                                $( "<label>" ).attr( "for", val.enum[i] ).text( val.enum[i] ).appendTo( "#myForm" );
+                                radioBtn.appendTo( "#" +val.id );
+                                $( "<label>" ).attr( "for", val.enum[i] ).html( val.enum[i] + "<br>" ).appendTo( "#" +val.id );
                             }
                             break;
                     
                         case "box":
-                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
+                            $( "#" +val.id ).append(val.title + ":<br>");
                             for ( i in val.enum ) {
-                                $( "<div/>", {"class": "my-form-elt", "id": "checkbox"}).appendTo( "#myForm" );
-                                $( "#myForm" ).append( "<input type='checkbox' name='food'>" +val.enum[i]+ "</input>" );
+                                $( "#" +val.id ).append( "<input type='checkbox' name='food'>" +val.enum[i]+ "</input><br>" );
                             }
                             break;
 
                         case "select":
-                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
-                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
+                            $( "#" +val.id ).append(val.title + ":<br>");
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#" +val.id );
                             var selectElt = $('<select>').attr( {name: "function", id: "function"} );
-                            selectElt.appendTo('#myForm');
+                            selectElt.appendTo( "#" +val.id );
                             for ( i in val.enum ) {
                                 var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
                                 optionElt.text( val.enum[i] );
                                 $( "select" ).append( optionElt );
-                                console.log(optionElt);
                             }
                             break;
                         
                             case "multiple":
-                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + "(Multi-selection: ctrl (Win) ou cmd (Mac)):").appendTo( "#myForm" );
-                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
+                            $( "#" +val.id ).append(val.title + ":<br>");
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#" +val.id );
                             var multipleElt = $('<select multiple>').attr( {name: "country", id: "country"} );
-                                multipleElt.appendTo('#myForm');
+                                multipleElt.appendTo( "#" +val.id );
                             for ( i in val.enum ) {
                                 var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
                                 optionElt.text( val.enum[i] );
                                 $( "#country" ).append( optionElt ); // when I select select elt here it affects even
                                 // other select elements. For that purpose I select by Id.
-                                console.log(optionElt);
                             }
                             break;
 
                             case "auto":
-                            $( "<div/>", {"class": "my-form-elt"}).text(val.title + ":").appendTo( "#myForm" );
-                            $( "<label>" ).attr( "for", val.title ).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
+                            $( "#" +val.id ).append(val.title + ":<br>");
+                            $( "<label>" ).attr( "for", val.title ).appendTo( "#" +val.id );
                             $( "<input>" ).attr( { list: "browsers", id: "myBrowser", name: "myBrowser"  } ).appendTo( "#myForm" );
                             var datalistElt = $('<datalist>').attr( { id: "browsers" } );
-                                datalistElt.appendTo('#myForm');
+                                datalistElt.appendTo( "#" +val.id );
                             for ( i in val.enum ) {
                                 var optionElt = $( "<option>" ).attr( { value: val.enum[i] } );
-                                //optionElt.text( val.enum[i] );
                                 $( "datalist" ).append( optionElt ); // when I select select elt here it affects even
                                 // other select elements. For that purpose I select by Id.
-                                console.log(optionElt);
                             }
                             break;
 
                         default:
-                            $( "<div/>", {"class": "my-form-elt"}).appendTo( "#myForm" );
+                            var div = $( "<div>" ).attr( { id: val.id, class: "my-form-elt" } );
+                            div.appendTo( "#myForm" );
                             $( "<label>" ).attr( "for", val.title ).html(val.title + ":<input type='text'> <br>").
-                            appendTo( "#myForm" );
+                            appendTo( "#" +val.id );
                             break;
-
                     }
 
                 });
